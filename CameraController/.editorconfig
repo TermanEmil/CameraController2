@@ -1,0 +1,8 @@
+﻿# This file is the top-most EditorConfig file
+root = true
+
+[*.cs]
+dotnet_style_qualification_for_field = true:suggestion
+dotnet_style_qualification_for_property = true:suggestion
+dotnet_style_qualification_for_method = true:suggestion
+dotnet_style_qualification_for_event = true:suggestion
