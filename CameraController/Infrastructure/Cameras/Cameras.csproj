@@ -2,14 +2,12 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <LangVersion>8</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Gphoto2\" />
     <Folder Include="Gphoto2\Scripts\" />
     <Folder Include="Gphoto2\Commands\" />
-    <Folder Include="Gphoto2\Queries\" />
-    <Folder Include="Gphoto2\Queries\AutoDetect\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Class1.cs" />

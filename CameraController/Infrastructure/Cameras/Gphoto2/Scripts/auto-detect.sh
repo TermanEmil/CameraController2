@@ -12,6 +12,6 @@ else
 fi
 
 gphoto2 --auto-detect\
-	| grep -i -v "Model"\					# Remove the line containing Model and Port
-	| grep -v -E "\-+"\						# Remove the line containing a long line
-	| sed ${sed_regex_flag} 's/   +/|/'		# Replace the first 3+ spaces with a pipe
+	| grep -i -v "Model"\						# Remove the line containing Model and Port
+	| grep -v -E "\-+"\							# Remove the line containing a long line
+	| sed ${sed_regex_flag} 's/   +/<|>/'		# Replace the first 3+ spaces with '<|>'
