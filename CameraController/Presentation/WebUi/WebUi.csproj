@@ -4,6 +4,13 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Controllers\Web\**" />
+    <Content Remove="Controllers\Web\**" />
+    <EmbeddedResource Remove="Controllers\Web\**" />
+    <None Remove="Controllers\Web\**" />
+  </ItemGroup>
+
 
 
   <ItemGroup>
@@ -11,6 +18,5 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Controllers\Api\" />
-    <Folder Include="Controllers\Web\" />
   </ItemGroup>
 </Project>

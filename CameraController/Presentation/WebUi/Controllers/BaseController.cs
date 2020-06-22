@@ -10,8 +10,6 @@ namespace WebUi.Controllers
     {
         private IMediator mediator;
 
-        protected IMediator Mediator =>
-            (this.mediator) ??
-            (this.mediator = this.HttpContext.RequestServices.GetService<IMediator>());
+        protected IMediator Mediator => this.mediator ??= this.HttpContext.RequestServices.GetService<IMediator>();
     }
 }

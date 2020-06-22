@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
+using CameraControl.Entities;
 
-namespace Application.Cameras.Infrastructure
+namespace CameraControl.Infrastructure
 {
     public interface ICameraManager
     {

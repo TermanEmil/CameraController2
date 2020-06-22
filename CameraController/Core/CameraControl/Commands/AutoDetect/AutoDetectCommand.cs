@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using MediatR;
 
-namespace Application.Cameras.Commands.AutoDetect
+namespace CameraControl.Commands.AutoDetect
 {
     public class AutoDetectCommand : IRequest<Unit>
     {

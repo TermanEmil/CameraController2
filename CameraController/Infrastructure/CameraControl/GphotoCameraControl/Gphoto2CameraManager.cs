@@ -1,8 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
-using Application.Cameras.Infrastructure;
+using CameraControl.Entities;
+using CameraControl.Infrastructure;
 
-namespace Cameras.Gphoto2
+namespace GphotoCameraControl
 {
     public class Gphoto2CameraManager : ICameraManager
     {
