@@ -6,7 +6,11 @@ namespace Processes.ProcessWrappers
     {
         public IProcess Start(string filename)
         {
-            return new ProcessWrapper(Process.Start(filename));
+            var proc = Process.Start(filename);
+            if (proc is null)
+                return null;
+
+            return new ProcessWrapper(proc);
         }
     }
 }

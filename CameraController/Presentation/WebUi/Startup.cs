@@ -1,8 +1,11 @@
+#pragma warning disable CA1822 // Mark members as static
+
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebUi.StartupConfigExtensions;
 
 namespace WebUi
 {
@@ -17,6 +20,12 @@ namespace WebUi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureMappings();
+            services.ConfigureMediator();
+            services.ConfigureSwagger();
+
+            services.ConfigureAppDependencies();
+
             services.AddControllersWithViews();
         }
 
@@ -29,6 +38,8 @@ namespace WebUi
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.ConfigureSwagger();
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();

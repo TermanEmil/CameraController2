@@ -1,13 +1,9 @@
 ﻿using System;
+using GphotoCameraControl.Exceptions;
 using Processes;
 
-namespace GphotoCameraControl
+namespace GphotoCameraControl.ScriptRunning
 {
-    public interface IScriptRunner
-    {
-        IProcess RunAutoDetection();
-    }
-
     public class ScriptRunner : IScriptRunner
     {
         private readonly IProcessRunner processRunner;
@@ -19,7 +15,11 @@ namespace GphotoCameraControl
 
         public IProcess RunAutoDetection()
         {
-            return this.processRunner.Start("auto-detect.sh");
+            var proc = this.processRunner.Start("auto-detect.sh");
+            if (proc is null)
+                throw new GphotoException($"Failed to start {nameof(this.RunAutoDetection)}");
+
+            return proc;
         }
     }
 }

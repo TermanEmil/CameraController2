@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
-using CameraControl.Entities;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CameraControl.Infrastructure
 {
     public interface ICameraManager
     {
-        IEnumerable<Camera> AutoDetectCameras();
+        Task<IEnumerable<Camera>> AutoDetectCameras(CancellationToken ct = default);
     }
 }
