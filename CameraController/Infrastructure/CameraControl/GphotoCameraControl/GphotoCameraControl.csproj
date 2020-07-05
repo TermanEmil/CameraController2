@@ -14,4 +14,10 @@
     <ProjectReference Include="..\..\Processes\Processes.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Scripts\auto-detect.sh">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

@@ -9,7 +9,7 @@ namespace Processes.ProcessWrappers
             var proc = Process.Start(filename);
             if (proc is null)
                 return null;
-
+            
             return new ProcessWrapper(proc);
         }
     }

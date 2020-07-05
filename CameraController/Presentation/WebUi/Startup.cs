@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using WebUi.Middlewares;
 using WebUi.StartupConfigExtensions;
 
 namespace WebUi
@@ -38,6 +39,8 @@ namespace WebUi
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
+
+            app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.ConfigureSwagger();
 

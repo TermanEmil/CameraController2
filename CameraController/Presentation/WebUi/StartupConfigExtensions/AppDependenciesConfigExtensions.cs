@@ -1,9 +1,11 @@
-﻿using CameraControl.Infrastructure;
+﻿using System;
+using CameraControl.Infrastructure;
 using GphotoCameraControl;
 using GphotoCameraControl.ScriptRunning;
 using Microsoft.Extensions.DependencyInjection;
 using Processes;
 using Processes.ProcessWrappers;
+using WebUi.Middlewares;
 
 namespace WebUi.StartupConfigExtensions
 {
@@ -11,7 +13,11 @@ namespace WebUi.StartupConfigExtensions
     {
         public static void ConfigureAppDependencies(this IServiceCollection services)
         {
+            services.AddTransient<ExceptionHandlingMiddleware>();
+
             services.AddTransient<IProcessRunner, ProcessRunnerWrapper>();
+            services.Decorate<IProcessRunner, ExceptionMiddlewareProcessRunner>();
+
             services.ConfigureGphoto();
         }
 
