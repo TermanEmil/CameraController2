@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel;
+using System.IO;
 using CameraControl.Exceptions;
-using GphotoCameraControl.Exceptions;
 using Processes;
 
 namespace GphotoCameraControl.ScriptRunning
@@ -23,7 +23,11 @@ namespace GphotoCameraControl.ScriptRunning
             }
             catch (Win32Exception e)
             {
-                throw new UnsupportedActionException("This action is not supported on Windows", e);
+                throw new CameraControlException($"Failed to run '{Path.GetFileName(filename)}'", e);
+            }
+            catch (PlatformNotSupportedException e)
+            {
+                throw new UnsupportedActionException("This action is not supported on this platform", e);
             }
         }
     }

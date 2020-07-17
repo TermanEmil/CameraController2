@@ -43,12 +43,8 @@ namespace WebUi
             app.UseMiddleware<ExceptionHandlingMiddleware>();
 
             app.ConfigureSwagger();
-
-            app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

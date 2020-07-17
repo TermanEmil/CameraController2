@@ -6,7 +6,13 @@ namespace Processes.ProcessWrappers
     {
         public IProcess Start(string filename)
         {
-            var proc = Process.Start(filename);
+            var startInfo = new ProcessStartInfo(filename)
+            {
+                RedirectStandardOutput = true,
+                RedirectStandardError = true
+            };
+
+            var proc = Process.Start(startInfo);
             if (proc is null)
                 return null;
             
