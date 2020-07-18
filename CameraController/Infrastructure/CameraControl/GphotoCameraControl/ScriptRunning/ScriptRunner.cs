@@ -19,7 +19,7 @@ namespace GphotoCameraControl.ScriptRunning
 
         public IProcess RunAutoDetection()
         {
-            var proc = this.processRunner.Start($"{BasePath}/Scripts/auto-detect.sh");
+            var proc = this.processRunner.Start("bash", $"{BasePath}/Scripts/auto-detect.sh");
             if (proc is null)
                 throw new GphotoException($"Failed to start {nameof(this.RunAutoDetection)}");
 

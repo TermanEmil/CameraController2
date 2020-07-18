@@ -15,11 +15,11 @@ namespace GphotoCameraControl.ScriptRunning
             this.wrappee = wrappee ?? throw new ArgumentNullException(nameof(wrappee));
         }
 
-        public IProcess Start(string filename)
+        public IProcess Start(string filename, params string[] args)
         {
             try
             {
-                return this.wrappee.Start(filename);
+                return this.wrappee.Start(filename, args);
             }
             catch (Win32Exception e)
             {

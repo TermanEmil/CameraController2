@@ -1,4 +1,4 @@
-﻿#!/bin/bash 
+#!/bin/bash
 
 # Example output:
 #   Nikon DSC D810     ===usb:003,003 
@@ -11,7 +11,12 @@ else
 	sed_regex_flag='-r';
 fi
 
+
+# Remove the line containing Model and Port
+# Remove the line containing a long line
+# Separates the model name from the port by '==='
 gphoto2 --auto-detect\
-|	grep -i -v "Model"\									# Remove the line containing Model and Port
-|	grep -v -E "\-+"\									# Remove the line containing a long line
-|	sed ${sed_regex_flag} -n 's/(.+)(usb:.+)/\1===\2/p'	# Separates the model name from the port by '==='
+|	grep -i -v "Model"\
+|	grep -v -E "\-+"\
+|	sed ${sed_regex_flag} -n 's/(.+)(usb:.+)/\1===\2/p'
+

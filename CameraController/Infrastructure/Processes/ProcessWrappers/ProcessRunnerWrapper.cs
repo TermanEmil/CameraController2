@@ -4,12 +4,12 @@ namespace Processes.ProcessWrappers
 {
     public class ProcessRunnerWrapper : IProcessRunner
     {
-        public IProcess Start(string filename)
+        public IProcess Start(string filename, params string[] args)
         {
-            var startInfo = new ProcessStartInfo(filename)
+            var startInfo = new ProcessStartInfo(filename, string.Join(' ', args))
             {
                 RedirectStandardOutput = true,
-                RedirectStandardError = true
+                RedirectStandardError = true,
             };
 
             var proc = Process.Start(startInfo);

@@ -2,6 +2,6 @@
 {
     public interface IProcessRunner
     {
-        IProcess Start(string filename);
+        IProcess Start(string filename, params string[] args);
     }
 }
