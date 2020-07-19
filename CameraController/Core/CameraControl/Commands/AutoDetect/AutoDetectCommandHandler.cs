@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using CameraControl.Infrastructure;
 using MediatR;
 
 namespace CameraControl.Commands.AutoDetect

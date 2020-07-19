@@ -1,4 +1,4 @@
-﻿using CameraControl.Infrastructure;
+﻿using CameraControl;
 using GphotoCameraControl;
 using GphotoCameraControl.ScriptRunning;
 using Microsoft.Extensions.DependencyInjection;

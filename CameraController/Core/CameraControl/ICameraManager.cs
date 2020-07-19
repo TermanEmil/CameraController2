@@ -2,7 +2,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace CameraControl.Infrastructure
+namespace CameraControl
 {
     public interface ICameraManager
     {

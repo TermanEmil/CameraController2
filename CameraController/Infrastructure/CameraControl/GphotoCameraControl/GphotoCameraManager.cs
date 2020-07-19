@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using CameraControl;
-using CameraControl.Infrastructure;
 using GphotoCameraControl.Commands.AutoDetectGpCameras;
 using MediatR;
 

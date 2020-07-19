@@ -1,5 +1,5 @@
 ﻿using System.Linq;
-using CameraControl.Infrastructure;
+using CameraControl;
 using FakeCameraControl;
 using FakeCameraControl.Configuration;
 using Microsoft.Extensions.DependencyInjection;
