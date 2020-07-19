@@ -1,7 +1,6 @@
-﻿using System;
-using CameraControl.Infrastructure;
-using GphotoCameraControl;
+﻿using FakeCameraControl.Configuration;
 using GphotoCameraControl.ScriptRunning;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Processes;
 using Processes.ProcessWrappers;
@@ -11,20 +10,22 @@ namespace WebUi.StartupConfigExtensions
 {
     public static class AppDependenciesConfigExtensions
     {
-        public static void ConfigureAppDependencies(this IServiceCollection services)
+        public static void ConfigureAppDependencies(this IServiceCollection services, IConfiguration configuration)
         {
             services.AddTransient<ExceptionHandlingMiddleware>();
-
             services.AddTransient<IProcessRunner, ProcessRunnerWrapper>();
-            services.Decorate<IProcessRunner, ExceptionMiddlewareProcessRunner>();
-
-            services.ConfigureGphoto();
+            services.ConfigureCameras(configuration);
         }
 
-        private static void ConfigureGphoto(this IServiceCollection services)
+        private static void ConfigureCameras(this IServiceCollection services, IConfiguration configuration)
         {
+            var fakeCameraControlConfig = configuration.GetSection("FakeCameraControl").Get<FakeCameraControlConfig>();
+            if (fakeCameraControlConfig?.Enabled is true)
+                services.ConfigureFakeCameraControl(fakeCameraControlConfig);
+            else
+                services.ConfigureGphoto();
+
             services.AddTransient<IScriptRunner, ScriptRunner>();
-            services.AddTransient<ICameraManager, GphotoCameraManager>();
         }
     }
 }

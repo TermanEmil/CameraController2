@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using CameraControl;
@@ -8,13 +10,16 @@ namespace FakeCameraControl
 {
     public class FakeCameraManager : ICameraManager
     {
+        private readonly IReadOnlyCollection<FakeCamera> cameras;
+
         public FakeCameraManager(IEnumerable<FakeCamera> cameras)
         {
+            this.cameras = cameras?.ToList() ?? throw new ArgumentNullException(nameof(cameras));
         }
 
         public Task<IEnumerable<Camera>> AutoDetectCameras(CancellationToken ct = default)
         {
-            throw new System.NotImplementedException();
+            return Task.FromResult(this.cameras.Select(x => x as Camera));
         }
     }
 }

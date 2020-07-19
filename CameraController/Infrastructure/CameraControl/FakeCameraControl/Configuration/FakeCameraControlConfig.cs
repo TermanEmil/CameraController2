@@ -1,0 +1,10 @@
+﻿using System.Collections.Generic;
+
+namespace FakeCameraControl.Configuration
+{
+    public class FakeCameraControlConfig
+    {
+        public bool Enabled { get; set; }
+        public IEnumerable<FakeCameraConfiguration> Cameras { get; set; }
+    }
+}

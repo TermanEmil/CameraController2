@@ -25,7 +25,7 @@ namespace WebUi
             services.ConfigureMediator();
             services.ConfigureSwagger();
 
-            services.ConfigureAppDependencies();
+            services.ConfigureAppDependencies(this.Configuration);
 
             services.AddControllersWithViews();
         }

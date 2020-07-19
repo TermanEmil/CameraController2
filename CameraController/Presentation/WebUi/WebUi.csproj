@@ -26,6 +26,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Common\CommonMappingUtils\CommonMappingUtils.csproj" />
     <ProjectReference Include="..\..\Core\CameraControl\CameraControl.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CameraControl\FakeCameraControl\FakeCameraControl.csproj" />
     <ProjectReference Include="..\..\Infrastructure\CameraControl\GphotoCameraControl\GphotoCameraControl.csproj" />
   </ItemGroup>
 </Project>
