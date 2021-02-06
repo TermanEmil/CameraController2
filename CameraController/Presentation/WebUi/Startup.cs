@@ -1,5 +1,3 @@
-#pragma warning disable CA1822 // Mark members as static
-
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -21,6 +19,7 @@ namespace WebUi
 
         public void ConfigureServices(IServiceCollection services)
         {
+            services.ConfigureValidations();
             services.ConfigureMappings();
             services.ConfigureMediator();
             services.ConfigureSwagger();
@@ -33,7 +32,9 @@ namespace WebUi
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
+            {
                 app.UseDeveloperExceptionPage();
+            }
             else
             {
                 app.UseExceptionHandler("/Home/Error");

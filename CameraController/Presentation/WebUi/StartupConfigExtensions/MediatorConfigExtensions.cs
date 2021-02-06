@@ -1,7 +1,9 @@
 ﻿using CameraControl;
+using FakeCameraControl;
 using GphotoCameraControl;
 using MediatR;
 using Microsoft.Extensions.DependencyInjection;
+using Validations;
 
 namespace WebUi.StartupConfigExtensions
 {
@@ -12,7 +14,10 @@ namespace WebUi.StartupConfigExtensions
             services.AddMediatR(
                 typeof(Startup),
                 typeof(Camera),
-                typeof(GpCamera));
+                typeof(GpCamera),
+                typeof(FakeCamera));
+
+            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
         }
     }
 }
