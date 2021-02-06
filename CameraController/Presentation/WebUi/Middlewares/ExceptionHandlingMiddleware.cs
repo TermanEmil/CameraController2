@@ -14,6 +14,10 @@ namespace WebUi.Middlewares
             {
                 await next(context);
             }
+            catch (CameraNotFoundException e)
+            {
+                await HandleCameraNotFoundException(context, e);
+            }
             catch (UnsupportedActionException e)
             {
                 await HandleUnsupportedActionException(context, e);
@@ -22,6 +26,14 @@ namespace WebUi.Middlewares
             {
                 await HandleCameraControlException(context, e);
             }
+        }
+
+        private static async Task HandleCameraNotFoundException(HttpContext context, CameraNotFoundException e)
+        {
+            context.Response.StatusCode = StatusCodes.Status404NotFound;
+            context.Response.ContentType = MediaTypeNames.Application.Json;
+
+            await context.Response.WriteAsync(JsonConvert.SerializeObject(new { Error = e.Message }));
         }
 
         private static async Task HandleUnsupportedActionException(HttpContext context, UnsupportedActionException e)

@@ -1,5 +1,6 @@
-﻿using System;
-using CameraControl;
+﻿using CameraControl;
+using System;
+using System.Threading.Tasks;
 
 namespace GphotoCameraControl
 {
@@ -13,5 +14,10 @@ namespace GphotoCameraControl
 
         public override string Model { get; }
         public override string Port { get; }
+
+        public override Task<string> CaptureImage(string path, string filename)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

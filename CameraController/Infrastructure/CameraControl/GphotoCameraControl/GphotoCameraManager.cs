@@ -21,5 +21,10 @@ namespace GphotoCameraControl
         {
             return await this.mediator.Send(new AutoDetectGpCamerasCommand(), ct);
         }
+
+        public Task<Camera> FindCamera(string port)
+        {
+            throw new NotImplementedException();
+        }
     }
 }
