@@ -30,7 +30,6 @@ namespace GphotoCameraControl.Commands.AutoDetectGpCameras
         {
             string line;
 
-
             using var process = this.scriptRunner.RunAutoDetection();
 
             while ((line = await process.StandardOutput.ReadLineAsync()) != null)

@@ -1,15 +1,12 @@
 #!/bin/bash
 
-# Example output:
-#   Nikon DSC D810     ===usb:003,003 
+# Example output from `gphoto2 --auto-detect`:
+#	Model                          Port
+#	----------------------------------------------------------
+#	Nikon DSC D810                 usb:002,002
 
-# On osx, `sed` has a different flag for regex
-if [ "$(uname -s)" = "Darwin" ]
-then
-	sed_regex_flag='-E';
-else
-	sed_regex_flag='-r';
-fi
+# Expected output from script
+#	Nikon DSC D810===usb:002,002
 
 
 # Remove the line containing Model and Port
@@ -18,5 +15,4 @@ fi
 gphoto2 --auto-detect\
 |	grep -i -v "Model"\
 |	grep -v -E "\-+"\
-|	sed ${sed_regex_flag} -n 's/(.+)(usb:.+)/\1===\2/p'
-
+|	sed -r -n 's/(.+)(usb:.+)/\1===\2/p'
