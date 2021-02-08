@@ -1,13 +1,18 @@
-﻿using CameraControl;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using CameraControl;
+using GphotoCameraControl.Commands.CaptureImage;
+using MediatR;
 
 namespace GphotoCameraControl
 {
     public class GpCamera : Camera
     {
-        public GpCamera(string model, string port)
+        private readonly IMediator mediator;
+
+        public GpCamera(IMediator mediator, string model, string port)
         {
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.Model = model ?? throw new ArgumentNullException(nameof(model));
             this.Port = port ?? throw new ArgumentNullException(nameof(port));
         }
@@ -15,9 +20,9 @@ namespace GphotoCameraControl
         public override string Model { get; }
         public override string Port { get; }
 
-        public override Task<string> CaptureImage(string path, string filename)
+        public override async Task<string> CaptureImage(string path, string filename)
         {
-            throw new NotImplementedException();
+            return await this.mediator.Send(new CaptureImageCommand($"{path}/{filename}", this.Port));
         }
     }
 }

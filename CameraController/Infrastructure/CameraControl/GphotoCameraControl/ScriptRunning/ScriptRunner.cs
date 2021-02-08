@@ -25,5 +25,16 @@ namespace GphotoCameraControl.ScriptRunning
 
             return proc;
         }
+
+        public IProcess RunCaptureImage(string filename, string port)
+        {
+            var script = $"{BasePath}/Scripts/capture-image-and-download.sh";
+            var proc = this.processRunner.Start("bash", script, filename, port);
+
+            if (proc is null)
+                throw new GphotoException($"Failed to start {nameof(this.RunCaptureImage)}");
+
+            return proc;
+        }
     }
 }

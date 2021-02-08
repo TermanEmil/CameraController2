@@ -13,11 +13,12 @@ namespace GphotoCameraControl.Commands.AutoDetectGpCameras
     public class AutoDetectGpCamerasCommandHandler : IRequestHandler<AutoDetectGpCamerasCommand, IEnumerable<GpCamera>>
     {
         private const string ExpectedLineFormat = @"(?<model>.+)===(?<port>.+\S)";
-
+        private readonly IMediator mediator;
         private readonly IScriptRunner scriptRunner;
 
-        public AutoDetectGpCamerasCommandHandler(IScriptRunner scriptRunner)
+        public AutoDetectGpCamerasCommandHandler(IMediator mediator, IScriptRunner scriptRunner)
         {
+            this.mediator = mediator ?? throw new ArgumentNullException(nameof(mediator));
             this.scriptRunner = scriptRunner ?? throw new ArgumentNullException(nameof(scriptRunner));
         }
 
@@ -40,7 +41,7 @@ namespace GphotoCameraControl.Commands.AutoDetectGpCameras
 
                 var model = match.Groups["model"].Value.Trim();
                 var port = match.Groups["port"].Value.Trim();
-                yield return new GpCamera(model, port);
+                yield return new GpCamera(mediator, model, port);
             }
 
             var errors = await process.StandardError.ReadToEndAsync();
