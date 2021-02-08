@@ -22,7 +22,7 @@ namespace FakeCameraControl
             return Task.FromResult(this.cameras.Select(x => x as Camera));
         }
 
-        public Task<Camera> FindCamera(string port)
+        public Task<Camera> FindCamera(string port, CancellationToken ct = default)
         {
             var camera = this.cameras
                 .Where(x => x.Port.Equals(port, StringComparison.InvariantCultureIgnoreCase))
