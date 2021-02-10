@@ -1,10 +1,14 @@
-﻿using CameraControl.Commands.AutoDetect;
-using CameraControl.Commands.CaptureImage;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using System.IO;
+using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
+using CameraControl.Commands.AutoDetect;
+using CameraControl.Commands.CaptureImage;
+using CameraControl.Commands.CaptureImageAndDownload;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.StaticFiles;
 using WebUi.Models;
 
 namespace WebUi.Controllers.Api
@@ -23,10 +27,27 @@ namespace WebUi.Controllers.Api
         }
 
         [HttpPost]
-        [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task CaptureImage(string port, string path, string filename)
+        [ProducesResponseType(StatusCodes.Status204NoContent)]
+        public async Task<IActionResult> CaptureImage(string port, string path, string filename, CancellationToken ct)
         {
-            await this.Mediator.Send(new CaptureImageCommand(port, path, filename));
+            await this.Mediator.Send(new CaptureImageCommand(port, path, filename), ct);
+            return this.NoContent();
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CaptureImageAndDownload(string port, CancellationToken ct)
+        {
+            var path = await this.Mediator.Send(new CaptureImageAndDownloadCommand(port), ct);
+
+            var contentTypeProvider = new FileExtensionContentTypeProvider();
+            if (!contentTypeProvider.TryGetContentType(path, out var contentType))
+                contentType = MediaTypeNames.Application.Octet;
+
+            return new PhysicalFileResult(path, contentType)
+            {
+                FileDownloadName = Path.GetFileName(path)
+            };
         }
     }
 }
