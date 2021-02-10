@@ -28,7 +28,7 @@ namespace GphotoCameraControl.Commands.CaptureImage
                 throw new GphotoException(errors);
 
 
-            var lines = output.Split(Environment.NewLine);
+            var lines = output.Split(Environment.NewLine, StringSplitOptions.RemoveEmptyEntries);
             if (lines.Length != 1)
                 throw new UnexpectedProcessOutputException(output);
 
