@@ -1,4 +1,6 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CameraControl
 {
@@ -9,5 +11,7 @@ namespace CameraControl
         public abstract string Port { get; }
 
         public abstract Task<string> CaptureImage(string path, string filename);
+
+        public abstract Task<IEnumerable<byte>> CapturePreview(CancellationToken ct);
     }
 }

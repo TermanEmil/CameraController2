@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Drawing.Imaging;
 using System.IO;
+using System.Threading;
 using System.Threading.Tasks;
 using CameraControl;
 using FakeCameraControl.Commands.DrawRandomFigure;
@@ -34,6 +36,11 @@ namespace FakeCameraControl
             image.Save(fullPath, ImageFormat.Png);
 
             return fullPath;
+        }
+
+        public override Task<IEnumerable<byte>> CapturePreview(CancellationToken ct)
+        {
+            throw new NotImplementedException();
         }
     }
 }

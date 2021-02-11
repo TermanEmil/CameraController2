@@ -6,5 +6,6 @@ namespace GphotoCameraControl.ScriptRunning
     {
         IProcess RunAutoDetection();
         IProcess RunCaptureImage(string filename, string port);
+        IProcess RunCapturePreview(string port);
     }
 }

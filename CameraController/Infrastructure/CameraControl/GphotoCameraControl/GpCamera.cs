@@ -1,7 +1,10 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using CameraControl;
 using GphotoCameraControl.Commands.CaptureImage;
+using GphotoCameraControl.Commands.CapturePreview;
 using MediatR;
 
 namespace GphotoCameraControl
@@ -23,6 +26,11 @@ namespace GphotoCameraControl
         public override async Task<string> CaptureImage(string path, string filename)
         {
             return await this.mediator.Send(new CaptureImageCommand($"{path}/{filename}", this.Port));
+        }
+
+        public override async Task<IEnumerable<byte>> CapturePreview(CancellationToken ct)
+        {
+            return await this.mediator.Send(new CapturePreviewCommand(this.Port), ct);
         }
     }
 }

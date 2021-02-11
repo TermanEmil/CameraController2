@@ -1,8 +1,8 @@
-#!/bin/bash
+#!/bin/sh
 
 # Parameters
-#       $1: filename
-#       $2: port
+#       $1: port
+#       $2: filename
 
 # Example output from gphoto2 command given filename "Foo":
 #       New file is in location /capt0000.nef on the camera
@@ -22,6 +22,6 @@
 
 # Capture image on the given port and download it with the given name.
 # Filter out only the final filename (whatever follows 'Saving file as ')
-gphoto2 --capture-image-and-download --filename "$1.%C" --port "$2" --force-overwrite\
+gphoto2 --capture-image-and-download --port "$1" --filename "$2.%C"  --force-overwrite\
 |       sed -n 's/Saving file as //Ip'
 

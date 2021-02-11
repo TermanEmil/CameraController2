@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
 using GphotoCameraControl.Exceptions;
@@ -8,7 +9,7 @@ namespace GphotoCameraControl.ScriptRunning
 {
     public class ScriptRunner : IScriptRunner
     {
-        private static string BasePath => Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location);
+        private static string BasePath => $"{Path.GetDirectoryName(Assembly.GetEntryAssembly()?.Location)}/Scripts";
 
         private readonly IProcessRunner processRunner;
 
@@ -19,22 +20,30 @@ namespace GphotoCameraControl.ScriptRunning
 
         public IProcess RunAutoDetection()
         {
-            var proc = this.processRunner.Start("bash", $"{BasePath}/Scripts/auto-detect.sh");
-            if (proc is null)
-                throw new GphotoException($"Failed to start {nameof(this.RunAutoDetection)}");
-
-            return proc;
+            return this.RunScript("auto-detect.sh");
         }
 
         public IProcess RunCaptureImage(string filename, string port)
         {
-            var script = $"{BasePath}/Scripts/capture-image-and-download.sh";
-            var proc = this.processRunner.Start("bash", script, filename, port);
+            return this.RunScript("capture-image-and-download.sh", port, filename);
+        }
 
-            if (proc is null)
+        public IProcess RunCapturePreview(string port)
+        {
+            return this.RunScript("capture-preview.sh", port);
+        }
+
+        private IProcess RunScript(string script, params string[] scriptParameters)
+        {
+            var parameters = new List<string>();
+            parameters.Add($"{BasePath}/{script}");
+            parameters.AddRange(scriptParameters);
+
+            var process = this.processRunner.Start("sh", parameters.ToArray());
+            if (process is null)
                 throw new GphotoException($"Failed to start {nameof(this.RunCaptureImage)}");
 
-            return proc;
+            return process;
         }
     }
 }

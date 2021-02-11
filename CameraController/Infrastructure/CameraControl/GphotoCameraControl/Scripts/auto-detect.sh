@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 
 # Example output from `gphoto2 --auto-detect`:
 #	Model                          Port
