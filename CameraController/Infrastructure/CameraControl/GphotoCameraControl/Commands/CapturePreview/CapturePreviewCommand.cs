@@ -1,9 +1,8 @@
-﻿using System.Collections.Generic;
-using MediatR;
+﻿using MediatR;
 
 namespace GphotoCameraControl.Commands.CapturePreview
 {
-    public class CapturePreviewCommand : IRequest<IEnumerable<byte>>
+    public class CapturePreviewCommand : IRequest<byte[]>
     {
         public CapturePreviewCommand(string port)
         {

@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 using CameraControl.Commands.AutoDetect;
 using CameraControl.Commands.CaptureImage;
 using CameraControl.Commands.CaptureImageAndDownload;
+using CameraControl.Commands.CreatePreviewSource;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
+using WebUi.Common;
 using WebUi.Models;
 
 namespace WebUi.Controllers.Api
@@ -48,6 +50,14 @@ namespace WebUi.Controllers.Api
             {
                 FileDownloadName = Path.GetFileName(path)
             };
+        }
+
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        public async Task<IActionResult> CapturePreview(string port, CancellationToken ct)
+        {
+            var source = await this.Mediator.Send(new CreatePreviewSourceCommand(port), ct);
+            return new MjpegStreamContent(source, delay: 1000/20);
         }
     }
 }

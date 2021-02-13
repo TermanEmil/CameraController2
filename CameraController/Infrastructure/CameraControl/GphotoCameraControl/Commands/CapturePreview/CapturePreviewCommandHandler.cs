@@ -1,4 +1,4 @@
-﻿using System.Collections.Generic;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using GphotoCameraControl.Exceptions;
@@ -8,7 +8,7 @@ using StreamUtils;
 
 namespace GphotoCameraControl.Commands.CapturePreview
 {
-    public class CapturePreviewCommandHandler : IRequestHandler<CapturePreviewCommand, IEnumerable<byte>>
+    public class CapturePreviewCommandHandler : IRequestHandler<CapturePreviewCommand, byte[]>
     {
         private readonly IScriptRunner scriptRunner;
 
@@ -17,7 +17,7 @@ namespace GphotoCameraControl.Commands.CapturePreview
             this.scriptRunner = scriptRunner ?? throw new System.ArgumentNullException(nameof(scriptRunner));
         }
 
-        public async Task<IEnumerable<byte>> Handle(CapturePreviewCommand request, CancellationToken ct)
+        public async Task<byte[]> Handle(CapturePreviewCommand request, CancellationToken ct)
         {
             using var process = this.scriptRunner.RunCapturePreview(request.Port);
             var bytes = await process.StandardOutput.BaseStream.ReadToEndAsync(ct);
@@ -26,7 +26,7 @@ namespace GphotoCameraControl.Commands.CapturePreview
             if (!string.IsNullOrEmpty(errors))
                 throw new GphotoException(errors);
 
-            return bytes;
+            return bytes.ToArray();
         }
     }
 }

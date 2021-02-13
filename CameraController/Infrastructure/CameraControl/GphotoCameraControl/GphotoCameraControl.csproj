@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\..\Common\StreamUtils\StreamUtils.csproj" />
     <ProjectReference Include="..\..\..\Core\CameraControl\CameraControl.csproj" />
     <ProjectReference Include="..\..\Processes\Processes.csproj" />
   </ItemGroup>

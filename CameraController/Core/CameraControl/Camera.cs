@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 
 namespace CameraControl
@@ -10,8 +9,9 @@ namespace CameraControl
         
         public abstract string Port { get; }
 
+        // TODO: Where cancellation token?
         public abstract Task<string> CaptureImage(string path, string filename);
 
-        public abstract Task<IEnumerable<byte>> CapturePreview(CancellationToken ct);
+        public abstract Task<byte[]> CapturePreview(CancellationToken ct);
     }
 }
