@@ -23,7 +23,7 @@ namespace StreamUtils
             }
             while (bytesRead == buffer.Length);
 
-            return buffer;
+            return result;
         }
     }
 }
