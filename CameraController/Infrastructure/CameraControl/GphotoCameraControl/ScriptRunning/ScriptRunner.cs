@@ -35,8 +35,7 @@ namespace GphotoCameraControl.ScriptRunning
 
         private IProcess RunScript(string script, params string[] scriptParameters)
         {
-            var parameters = new List<string>();
-            parameters.Add($"{BasePath}/{script}");
+            var parameters = new List<string> { $"{BasePath}/{script}" };
             parameters.AddRange(scriptParameters);
 
             var process = this.processRunner.Start("sh", parameters.ToArray());

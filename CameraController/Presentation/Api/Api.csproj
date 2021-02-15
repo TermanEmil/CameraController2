@@ -1,0 +1,35 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <UserSecretsId>da35f442-0e0e-47b4-9ddb-77f0119c8752</UserSecretsId>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\Web\**" />
+    <Content Remove="Controllers\Web\**" />
+    <EmbeddedResource Remove="Controllers\Web\**" />
+    <None Remove="Controllers\Web\**" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="7.0.0" />
+    <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="9.5.0" />
+    <PackageReference Include="MediatR" Version="8.0.1" />
+    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="8.0.0" />
+    <PackageReference Include="Scrutor" Version="3.2.1" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="5.5.0" />
+  </ItemGroup>
+
+
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\Common\CommonMappingUtils\CommonMappingUtils.csproj" />
+    <ProjectReference Include="..\..\Common\Validations\Validations.csproj" />
+    <ProjectReference Include="..\..\Core\CameraControl\CameraControl.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CameraControl\FakeCameraControl\FakeCameraControl.csproj" />
+    <ProjectReference Include="..\..\Infrastructure\CameraControl\GphotoCameraControl\GphotoCameraControl.csproj" />
+  </ItemGroup>
+</Project>
