@@ -1,12 +1,11 @@
-﻿#pragma warning disable CA1063 // Implement IDisposable Correctly
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using GphotoCameraControl.Commands.AutoDetectGpCameras;
 using GphotoCameraControl.Exceptions;
 using GphotoCameraControl.ScriptRunning;
+using MediatR;
 using Moq;
 using Processes;
 using TestingUtils;
@@ -17,21 +16,24 @@ namespace GphotoCameraControl.Tests.Commands.AutoDetectGpCameras
     [Trait("Category", "Integration")]
     public class AutoDetectGpCamerasCommandHandlerTests : IDisposable
     {
-        private readonly Mock<IProcess> processMock;
-        private readonly Mock<IScriptRunner> scriptRunnerMock;
+        private readonly Mock<IMediator> mediator;
+        private readonly Mock<IProcess> process;
+        private readonly Mock<IScriptRunner> scriptRunner;
         private readonly AutoDetectGpCamerasCommandHandler sut;
 
         public AutoDetectGpCamerasCommandHandlerTests()
         {
-            this.processMock = new Mock<IProcess>();
-            this.scriptRunnerMock = new Mock<IScriptRunner>();
-            this.sut = new AutoDetectGpCamerasCommandHandler(this.scriptRunnerMock.Object);
+            this.mediator = new Mock<IMediator>();
+            this.process = new Mock<IProcess>();
+            this.scriptRunner = new Mock<IScriptRunner>();
+            this.sut = new AutoDetectGpCamerasCommandHandler(this.mediator.Object, this.scriptRunner.Object);
         }
 
         public void Dispose()
         {
-            this.processMock.VerifyAll();
-            this.scriptRunnerMock.VerifyAll();
+            this.mediator.VerifyAll();
+            this.process.VerifyAll();
+            this.scriptRunner.VerifyAll();
         }
 
         [Fact]
@@ -39,9 +41,9 @@ namespace GphotoCameraControl.Tests.Commands.AutoDetectGpCameras
         {
             const string procOut = "Foo1===Bar1\nFoo2===Bar2";
 
-            this.processMock.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader(procOut));
-            this.processMock.Setup(x => x.StandardError).Returns(StreamFactory.GenerateReader());
-            this.scriptRunnerMock.Setup(x => x.RunAutoDetection()).Returns(this.processMock.Object);
+            this.process.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader(procOut));
+            this.process.Setup(x => x.StandardError).Returns(StreamFactory.GenerateReader());
+            this.scriptRunner.Setup(x => x.RunAutoDetection()).Returns(this.process.Object);
 
             var actualEnum = await this.sut.Handle(new AutoDetectGpCamerasCommand());
             var actual = actualEnum.ToList();
@@ -56,9 +58,9 @@ namespace GphotoCameraControl.Tests.Commands.AutoDetectGpCameras
         [Fact]
         public async Task GivenEmptyInput_ShouldYieldNoCameras()
         {
-            this.processMock.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader());
-            this.processMock.Setup(x => x.StandardError).Returns(StreamFactory.GenerateReader());
-            this.scriptRunnerMock.Setup(x => x.RunAutoDetection()).Returns(this.processMock.Object);
+            this.process.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader());
+            this.process.Setup(x => x.StandardError).Returns(StreamFactory.GenerateReader());
+            this.scriptRunner.Setup(x => x.RunAutoDetection()).Returns(this.process.Object);
 
             var actual = await this.sut.Handle(new AutoDetectGpCamerasCommand());
 
@@ -68,8 +70,8 @@ namespace GphotoCameraControl.Tests.Commands.AutoDetectGpCameras
         [Fact]
         public async Task GivenInvalidInput_ShouldThrow()
         {
-            this.processMock.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader("Unexpected"));
-            this.scriptRunnerMock.Setup(x => x.RunAutoDetection()).Returns(this.processMock.Object);
+            this.process.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader("Unexpected"));
+            this.scriptRunner.Setup(x => x.RunAutoDetection()).Returns(this.process.Object);
 
             await this.sut
                 .Invoking(x => x.Handle(new AutoDetectGpCamerasCommand()))
@@ -80,9 +82,9 @@ namespace GphotoCameraControl.Tests.Commands.AutoDetectGpCameras
         [Fact]
         public async Task ProcessOutputsErrors_ShouldThrow()
         {
-            this.processMock.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader());
-            this.processMock.Setup(x => x.StandardError).Returns(StreamFactory.GenerateReader("Error"));
-            this.scriptRunnerMock.Setup(x => x.RunAutoDetection()).Returns(this.processMock.Object);
+            this.process.Setup(x => x.StandardOutput).Returns(StreamFactory.GenerateReader());
+            this.process.Setup(x => x.StandardError).Returns(StreamFactory.GenerateReader("Error"));
+            this.scriptRunner.Setup(x => x.RunAutoDetection()).Returns(this.process.Object);
 
             await this.sut
                 .Invoking(x => x.Handle(new AutoDetectGpCamerasCommand()))
