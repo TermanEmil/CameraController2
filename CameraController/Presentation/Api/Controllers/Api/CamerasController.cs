@@ -3,6 +3,8 @@ using System.IO;
 using System.Net.Mime;
 using System.Threading;
 using System.Threading.Tasks;
+using Api.Common;
+using Api.Models;
 using CameraControl.Commands.AutoDetect;
 using CameraControl.Commands.CaptureImage;
 using CameraControl.Commands.CaptureImageAndDownload;
@@ -10,16 +12,14 @@ using CameraControl.Commands.CreatePreviewSource;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.StaticFiles;
-using Api.Common;
-using Api.Models;
 
 namespace Api.Controllers.Api
 {
     [ApiController]
-    [Route("api/[controller]/[action]")]
+    [Route("api/[controller]")]
     public class CamerasController : BaseController
     {
-        [HttpPost]
+        [HttpGet]
         [ProducesResponseType(typeof(CameraViewModel[]), StatusCodes.Status200OK)]
         public async Task<IActionResult> AutoDetectCameras(CancellationToken ct)
         {
@@ -28,7 +28,7 @@ namespace Api.Controllers.Api
             return this.Ok(viewModels);
         }
 
-        [HttpPost]
+        [HttpPost("CaptureImage")]
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         public async Task<IActionResult> CaptureImage(string port, string path, string filename, CancellationToken ct)
         {
@@ -36,7 +36,7 @@ namespace Api.Controllers.Api
             return this.NoContent();
         }
 
-        [HttpGet]
+        [HttpGet("CaptureImageAndDownload")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CaptureImageAndDownload(string port, CancellationToken ct)
         {
@@ -52,7 +52,7 @@ namespace Api.Controllers.Api
             };
         }
 
-        [HttpGet]
+        [HttpGet("CapturePreview")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         public async Task<IActionResult> CapturePreview(string port, CancellationToken ct)
         {

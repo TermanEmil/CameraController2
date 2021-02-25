@@ -1,20 +1,23 @@
-import logo from 'logo.svg';
 import './App.css';
+import React, { Component, MouseEvent } from 'react';
+import { container } from 'services/inversify.config';
+import { AutoDetectCommandHandler } from 'services/core/camera-control/auto-detect/AutoDetectCommandHandler';
+import { AutoDetectCommand } from 'services/core/camera-control/auto-detect/AutoDetectCommand';
 
-function App(): JSX.Element {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  async handleAutoDetect(): Promise<void> {
+    const handler = container.get<AutoDetectCommandHandler>(AutoDetectCommandHandler);
+    const cameras = await handler.Handle(new AutoDetectCommand());
+    console.log(cameras);
+  }
+
+  render(): JSX.Element {
+    return (
+      <div>
+        <button onClick={this.handleAutoDetect}>Auto Detect</button>
+      </div>
+    );
+  }
 }
 
 export default App;

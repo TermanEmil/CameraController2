@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Api.Middlewares;
 using Api.StartupConfigExtensions;
+using Microsoft.AspNetCore.Cors.Infrastructure;
 
 namespace Api
 {
@@ -26,6 +27,7 @@ namespace Api
 
             services.ConfigureAppDependencies(this.Configuration);
 
+            services.AddCors(o => o.AddDefaultPolicy(builder => builder.AllowAnyOrigin()));
             services.AddControllersWithViews();
         }
 
@@ -47,6 +49,7 @@ namespace Api
             app.UseStaticFiles();
             app.UseRouting();
             app.UseAuthorization();
+            app.UseCors();
 
             app.UseEndpoints(endpoints =>
             {
