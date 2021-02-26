@@ -1,13 +1,10 @@
 import './App.css';
-import React, { Component, MouseEvent } from 'react';
-import { container } from 'services/inversify.config';
-import { AutoDetectCommandHandler } from 'services/core/camera-control/auto-detect/AutoDetectCommandHandler';
-import { AutoDetectCommand } from 'services/core/camera-control/auto-detect/AutoDetectCommand';
+import { Component } from 'react';
+import { getCameras } from './GetCameras';
 
 class App extends Component {
   async handleAutoDetect(): Promise<void> {
-    const handler = container.get<AutoDetectCommandHandler>(AutoDetectCommandHandler);
-    const cameras = await handler.Handle(new AutoDetectCommand());
+    const cameras = await getCameras();
     console.log(cameras);
   }
 
