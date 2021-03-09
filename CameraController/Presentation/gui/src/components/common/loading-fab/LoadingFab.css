@@ -1,0 +1,6 @@
+.LoadingFab-Progress {
+  position: 'absolute';
+  top: -6;
+  left: -6;
+  z-index: 1;
+}

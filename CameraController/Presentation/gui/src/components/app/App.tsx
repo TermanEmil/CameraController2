@@ -1,5 +1,8 @@
-import './App.css';
 import { useState } from 'react';
+import CameraIcon from '@material-ui/icons/Camera';
+import LoadingFab from 'components/common/loading-fab/LoadingFab';
+
+import './App.css';
 import getCameras from './GetCameras';
 import { CameraModel } from './CameraModel';
 
@@ -7,15 +10,24 @@ export default function App(): JSX.Element {
   const [cameras, setCameras] = useState<ReadonlyArray<CameraModel>>([]);
   const [errors, setErrors] = useState<string[]>([]);
 
-  const handleAutoDetect = () =>
-    getCameras()
-      .then((cameras) => setCameras(cameras))
-      .then(() => setErrors([]))
-      .catch((error) => setErrors([error.message]));
+  const handleAutoDetect = async () => {
+    return getCameras()
+      .then((cameras) => {
+        setCameras(cameras);
+        setErrors([]);
+      })
+      .catch((error) => {
+        setCameras([]);
+        setErrors([error.message]);
+      });
+  };
 
   return (
     <div>
-      <button onClick={handleAutoDetect}>Auto Detect</button>
+      <LoadingFab onClick={handleAutoDetect}>
+        <CameraIcon />
+      </LoadingFab>
+
       {cameras.map((camera, i) => (
         <div key={i}>
           {camera.model} | {camera.port}

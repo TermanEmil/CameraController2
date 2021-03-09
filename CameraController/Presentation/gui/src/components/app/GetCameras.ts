@@ -10,7 +10,7 @@ export default async function getCameras(): Promise<ReadonlyArray<CameraModel>> 
 
   const response = await axios
     .get<CameraModel[]>(`${ url }/cameras`)
-    .catch(() => { throw new Error('Failed to call the API') });
+    .catch(() => { throw new Error('The API did not respond') });
 
   await getCamerasResponseSchema
     .validate({ cameras: response.data })
