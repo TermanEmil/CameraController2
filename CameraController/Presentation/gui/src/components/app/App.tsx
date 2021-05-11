@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import CameraIcon from '@material-ui/icons/Camera';
 import { ErrorHandler, useErrorHandler } from 'components/common/error-handler/ErrorHandler';
-import LoadingFab from 'components/common/loading-fab/LoadingFab';
+import LoadingButton from 'components/common/loading-button/LoadingButton';
 import { useState } from 'react';
 
 import { CameraModel } from './CameraModel';
@@ -36,10 +36,6 @@ export default function App(): JSX.Element {
 
     return (
       <>
-        <LoadingFab onClick={handleAutoDetect}>
-          <CameraIcon />
-        </LoadingFab>
-
         <div className={classes.root}>
           <List component="nav" aria-label="main mailbox folders">
             {cameras.map((camera, i) => (
@@ -49,6 +45,7 @@ export default function App(): JSX.Element {
             ))}
           </List>
         </div>
+        <LoadingButton onClick={handleAutoDetect}>Autodetect</LoadingButton>
       </>
     );
   }
