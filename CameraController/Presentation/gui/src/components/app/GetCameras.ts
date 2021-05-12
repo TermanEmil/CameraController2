@@ -4,13 +4,15 @@ import * as env from 'env-var';
 import { CameraModel, getCamerasResponseSchema } from './CameraModel';
 
 export default async function getCameras(): Promise<ReadonlyArray<CameraModel>> {
-  const url = env
+  const baseUrl = env
     .get('REACT_APP_ApiCameraControlBasePath')
     .required()
     .asString();
 
+  const url = `${ baseUrl }/Cameras`;
+
   const response = await axios
-    .get<CameraModel[]>(`${ url }/cameras`)
+    .get<CameraModel[]>(url)
     .catch(() => { throw new Error('The API did not respond') });
 
   await getCamerasResponseSchema
