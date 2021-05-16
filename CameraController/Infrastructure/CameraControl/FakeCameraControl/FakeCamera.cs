@@ -32,6 +32,9 @@ namespace FakeCameraControl
             if (!Directory.Exists(path))
                 throw new DirectoryNotFoundException($"{path} not found");
 
+            // Fake long process
+            await Task.Delay(2000);
+
             var command = new DrawRandomFigureCommand(width: ImageWidth, height: ImageHeight, points: FigurePoints);
             using var image = await this.mediator.Send(command);
 

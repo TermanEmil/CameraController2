@@ -1,6 +1,5 @@
-import { CircularProgress, createStyles, IconButton, IconButtonProps, makeStyles } from '@material-ui/core';
-import { green } from '@material-ui/core/colors';
-import React, { useState } from 'react';
+import { CircularProgress, createStyles, Fade, IconButton, IconButtonProps, makeStyles } from '@material-ui/core';
+import { useState } from 'react';
 
 const useStyles = makeStyles(() =>
   createStyles({
@@ -9,8 +8,8 @@ const useStyles = makeStyles(() =>
     },
     buttonProgress: {
       position: 'absolute',
-      left: -26,
-      top: -13,
+      left: 10,
+      top: 10,
     },
   }),
 );
@@ -33,13 +32,13 @@ export default function LoadingIconButton(props: LoadingIconButtonProps): JSX.El
 
   return (
     <div className={classes.wrapper}>
-      {loading ? (
-        <CircularProgress size={26} color="primary" className={classes.buttonProgress} />
-      ) : (
-        <IconButton {...props} onClick={handleButtonClick}>
+      {loading && <CircularProgress size={26} color="primary" className={classes.buttonProgress} />}
+
+      <Fade in={!loading}>
+        <IconButton {...props} disabled={loading} onClick={handleButtonClick}>
           {props.children}
         </IconButton>
-      )}
+      </Fade>
     </div>
   );
 }

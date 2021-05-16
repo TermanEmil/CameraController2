@@ -17,9 +17,12 @@ namespace FakeCameraControl
             this.cameras = cameras?.ToList() ?? throw new ArgumentNullException(nameof(cameras));
         }
 
-        public Task<IEnumerable<Camera>> AutoDetectCameras(CancellationToken ct = default)
+        public async Task<IEnumerable<Camera>> AutoDetectCameras(CancellationToken ct = default)
         {
-            return Task.FromResult(this.cameras.Select(x => x as Camera));
+            // Fake long process
+            await Task.Delay(2000);
+
+            return this.cameras;
         }
 
         public Task<Camera> FindCamera(string port, CancellationToken ct = default)
