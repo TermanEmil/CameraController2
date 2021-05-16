@@ -1,18 +1,12 @@
-import { Button } from '@material-ui/core';
-import { Theme } from '@material-ui/core';
+import { Button, ButtonProps } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { createStyles } from '@material-ui/core/styles';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { ReactNode, useState } from 'react';
+import { useState } from 'react';
 
-const useStyles = makeStyles((theme: Theme) =>
+const useStyles = makeStyles(() =>
   createStyles({
-    wrapper: {
-      margin: theme.spacing(1),
-      position: 'relative',
-    },
     buttonProgress: {
-      color: 'secondary',
       position: 'absolute',
       top: '50%',
       left: '50%',
@@ -22,12 +16,11 @@ const useStyles = makeStyles((theme: Theme) =>
   }),
 );
 
-interface Props {
+export interface LoadingButtonProps extends ButtonProps {
   onClick?(): Promise<void>;
-  children?: ReactNode;
 }
 
-export default function LoadingFab(props: Props): JSX.Element {
+export default function LoadingButton(props: LoadingButtonProps): JSX.Element {
   const classes = useStyles();
   const [loading, setLoading] = useState(false);
 
@@ -40,11 +33,9 @@ export default function LoadingFab(props: Props): JSX.Element {
   };
 
   return (
-    <div className={classes.wrapper}>
-      <Button variant="contained" color="primary" disabled={loading} onClick={handleButtonClick}>
-        {props.children}
-        {loading && <CircularProgress size={24} className={classes.buttonProgress} />}
-      </Button>
-    </div>
+    <Button {...props} disabled={loading} onClick={handleButtonClick}>
+      {loading && <CircularProgress size={24} color="primary" className={classes.buttonProgress} />}
+      {props.children}
+    </Button>
   );
 }

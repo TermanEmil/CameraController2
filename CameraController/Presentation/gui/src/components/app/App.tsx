@@ -1,6 +1,6 @@
 import './App.css';
 
-import { IconButton, ListItemSecondaryAction } from '@material-ui/core';
+import { ListItemSecondaryAction } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
@@ -8,6 +8,7 @@ import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import PhotoCameraIcon from '@material-ui/icons/PhotoCamera';
 import { ErrorHandler, useErrorHandler } from 'components/common/error-handler/ErrorHandler';
 import LoadingButton from 'components/common/loading-button/LoadingButton';
+import LoadingIconButton from 'components/common/loading-icon-button/LoadingIconButton';
 import React, { useState } from 'react';
 
 import { CameraModel } from './CameraModel';
@@ -48,15 +49,17 @@ export default function App(): JSX.Element {
               <ListItem key={i}>
                 <ListItemText primary={camera.model} secondary={camera.port} />
                 <ListItemSecondaryAction>
-                  <IconButton edge="end" aria-label="capture" onClick={() => handleCaptureImage(camera.port)}>
+                  <LoadingIconButton edge="end" aria-label="capture" onClick={() => handleCaptureImage(camera.port)}>
                     <PhotoCameraIcon />
-                  </IconButton>
+                  </LoadingIconButton>
                 </ListItemSecondaryAction>
               </ListItem>
             ))}
           </List>
         </div>
-        <LoadingButton onClick={handleAutoDetect}>Autodetect</LoadingButton>
+        <LoadingButton variant="contained" color="primary" onClick={handleAutoDetect}>
+          Autodetect
+        </LoadingButton>
       </>
     );
   }
