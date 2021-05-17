@@ -1,19 +1,13 @@
 import axios from 'axios';
-import * as env from 'env-var';
 import { saveAs } from 'file-saver';
 import mime from 'mime-types'
 
+import { getCaptureImageUrl } from './urls';
+
 export default async function captureImage(port: string): Promise<void> {
-  const baseUrl = env
-    .get('REACT_APP_ApiCameraControlBasePath')
-    .required()
-    .asString();
-
-  const url = `${ baseUrl }/Cameras/CaptureImageAndDownload`;
-
   return axios
     .request({
-      url: url,
+      url: getCaptureImageUrl(),
       responseType: 'blob',
       params: { port: port }
     })
