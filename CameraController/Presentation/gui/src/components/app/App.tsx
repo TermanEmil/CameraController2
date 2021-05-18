@@ -12,8 +12,8 @@ import LoadingIconButton from 'components/common/loading-icon-button/LoadingIcon
 import React, { useState } from 'react';
 
 import { CameraModel } from './CameraModel';
-import captureImage from './CaptureImage';
-import getCameras from './GetCameras';
+import captureImage from './captureImage';
+import getCameras from './getCameras';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
