@@ -4,7 +4,6 @@ import { getCamerasResponseSchema } from './CameraModel';
 import getCameras from "./getCameras";
 
 jest.mock('axios');
-jest.mock('./urls');
 
 const mockedAxios = axios as jest.Mocked<typeof axios>;
 
