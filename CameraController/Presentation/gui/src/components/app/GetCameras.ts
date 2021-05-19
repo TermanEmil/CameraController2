@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-import { CameraModel, getCamerasResponseSchema } from './CameraModel';
+import { CameraModel, getCamerasResponseSchema as camerasResponseSchema } from './CameraModel';
 import { getCamerasUrl } from './urls';
 
 export default async function getCameras(): Promise<ReadonlyArray<CameraModel>> {
@@ -8,7 +8,7 @@ export default async function getCameras(): Promise<ReadonlyArray<CameraModel>> 
     .get<CameraModel[]>(getCamerasUrl())
     .catch(() => { throw new Error('Failed to communicate with the API') });
 
-  await getCamerasResponseSchema
+  await camerasResponseSchema
     .validate({ cameras: response.data })
     .catch(() => { throw new Error('Unexpected API response') });
 
