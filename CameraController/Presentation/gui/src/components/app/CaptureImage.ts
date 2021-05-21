@@ -1,4 +1,6 @@
 import axios from 'axios';
+import CameraNotFoundError from 'components/common/exceptions/CameraNotFoundError';
+import CommunicationError from 'components/common/exceptions/CommunicationError';
 import { saveAs } from 'file-saver';
 import { StatusCodes } from 'http-status-codes'
 import mime from 'mime-types'
@@ -18,8 +20,8 @@ export default async function captureImage(port: string): Promise<void> {
     })
     .catch((error) => {
       if (error.response?.status == StatusCodes.NOT_FOUND)
-        throw new Error('The API responded with Not Found');
+        throw new CameraNotFoundError();
       else
-        throw new Error('Failed to communicate with the API');
+        throw new CommunicationError();
     });
 }

@@ -1,4 +1,6 @@
 import axios from 'axios';
+import CommunicationError from 'components/common/exceptions/CommunicationError';
+import UnexpectedResponseError from 'components/common/exceptions/UnexpectedResponseError';
 
 import { getCamerasResponseSchema } from './CameraModel';
 import getCameras from "./getCameras";
@@ -13,7 +15,7 @@ afterEach(() => {
 
 it('throws on API error', async () => {
   mockedAxios.get.mockRejectedValue('Some error');
-  await expect(getCameras()).rejects.toThrow();
+  await expect(getCameras()).rejects.toThrowError(CommunicationError);
 });
 
 it('returns no cameras on empty response', async () => {
@@ -24,7 +26,7 @@ it('returns no cameras on empty response', async () => {
 it("validates the API's response", async () => {
   mockedAxios.get.mockResolvedValue({data: [{foo: 'bar'}]});
   jest.spyOn(getCamerasResponseSchema, 'validate').mockRejectedValue('error');
-  await expect(getCameras()).rejects.toThrow();
+  await expect(getCameras()).rejects.toThrowError(UnexpectedResponseError);
 });
 
 it('returns cameras from the API', async () => {
