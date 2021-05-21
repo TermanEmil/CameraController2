@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { StatusCodes } from 'http-status-codes';
 
 import captureImage from './captureImage';
 
@@ -16,6 +17,6 @@ it('throws on API error', async () => {
 });
 
 it("throws when the API cannot find a camera on the specified port", async () => {
-  mockedAxios.request.mockRejectedValue({ response: { status: 404 } });
+  mockedAxios.request.mockRejectedValue({ response: { status: StatusCodes.NOT_FOUND } });
   await expect(captureImage('123')).rejects.toThrowError('The API responded with Not Found');
 });
