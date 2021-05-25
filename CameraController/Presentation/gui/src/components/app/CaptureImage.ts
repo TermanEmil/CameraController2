@@ -5,8 +5,7 @@ import UnexpectedResponseError from 'components/common/exceptions/UnexpectedResp
 import { saveAs } from 'file-saver';
 import { StatusCodes } from 'http-status-codes'
 import mime from 'mime-types'
-
-import { getCaptureImageUrl } from './urls';
+import { getCaptureImageUrl } from 'urls';
 
 export default async function captureImage(port: string): Promise<void> {
   let response: AxiosResponse;
