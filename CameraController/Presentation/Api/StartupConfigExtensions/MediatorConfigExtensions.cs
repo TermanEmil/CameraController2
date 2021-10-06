@@ -17,7 +17,7 @@ namespace Api.StartupConfigExtensions
                 typeof(GpCamera),
                 typeof(FakeCamera));
 
-            services.AddTransient(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
+            services.AddScoped(typeof(IPipelineBehavior<,>), typeof(RequestValidationBehavior<,>));
         }
     }
 }
